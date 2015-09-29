@@ -1,4 +1,4 @@
-function [] = imseg_levelset(img, ParaSeg, booDebug)
+function [M1, M2, M3] = imseg_levelset(img, ParaSeg, booDebug)
     % Segmentation method based on level set.
     % Originally brought up by Chuming Li.
     % Modified by Pengwei Wu, under the supervision of Tianye Niu.
