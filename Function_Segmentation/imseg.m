@@ -1,4 +1,4 @@
-function [imgTemplate imgTemplateFlat] = imseg(img, method, ParaSeg)
+function [imgTemplate, imgTemplateFlat] = imseg(img, method, ParaSeg)
     % Segmentation program for medical image.
     % By Pengwei Wu.
 
@@ -8,10 +8,10 @@ function [imgTemplate imgTemplateFlat] = imseg(img, method, ParaSeg)
         nameFlat = ParaSeg.nameFlat;
         load(strcat(dir, name));
         load(strcat(dir, nameFlat));
-        if(~exist(imgTemplate))
+        if(~exist('imgTemplate', 'var'))
             error('The name of the loaded template has to be imgTemplae');
         end
-        if(~exist(imgTemplateFlat))
+        if(~exist('imgTemplateFlat', 'var'))
             warning(['You should also provide imgTemplateFlat']);
         end
     end
