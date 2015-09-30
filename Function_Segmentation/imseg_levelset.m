@@ -95,7 +95,11 @@ function [M1, M2, M3] = imseg_levelset(img, ParaSeg, booDebug)
     M1 = H1 .* H2;
     M2 = H1 .* (1 - H2);
     M3 = (1 - H1);
-
+    
+    M1 = imresize(M1, 1 / scale);
+    M2 = imresize(M2, 1 / scale);
+    M3 = imresize(M3, 1 / scale);
+    
     imgSeg = C(1) * M1 + C(2) * M2 + C(3) * M3;  % three regions are labeled with C1, C2, C3
     if(booDebug); figure; imagesc(imgSeg); axis off; axis equal; title('Segmented regions');
     colormap(gray); maxscreen(); end
