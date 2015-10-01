@@ -2,6 +2,15 @@ function [M1, M2, M3] = imseg_levelset(img, ParaSeg, booDebug)
     % Segmentation method based on level set.
     % Originally brought up by Chuming Li.
     % Modified by Pengwei Wu, under the supervision of Tianye Niu.
+
+    % nu is used to  smooth the curve.
+    % mu has a similar effect.
+    % sigma is like the radius of the neighborhood.
+    % larger sigma means that the function becomes closer to the original level set function.
+
+
+
+
     booBiasCorrection = 0;
     % Only open it when you actually need bias correction.
 
@@ -9,7 +18,6 @@ function [M1, M2, M3] = imseg_levelset(img, ParaSeg, booDebug)
     % Note that this parameter can not be changed.
 
     iter_outer = ParaSeg.iterOuter; % times of iteration for outer loop
-    iter_inner = ParaSeg.iterInner; % times of iteration for inner loop
     sigma = ParaSeg.sigma; % scale parameter
     timeStep = ParaSeg.timeStep;
     mu = ParaSeg.muBase / timeStep; % (u in the passage)
@@ -69,7 +77,7 @@ function [M1, M2, M3] = imseg_levelset(img, ParaSeg, booDebug)
     for n = 1:iter_outer
 
         t0 = cputime;
-        [u, b, C] =  lse_bfe_3Phase(u, img, b, Ksigma, KONE, nu, timeStep, mu, epsilon, iter_inner);
+        [u, b, C] =  lse_bfe_3Phase(u, img, b, Ksigma, KONE, nu, timeStep, mu, epsilon);
         t1 = cputime;
         totaltime = totaltime + t1 - t0;
 
@@ -95,11 +103,11 @@ function [M1, M2, M3] = imseg_levelset(img, ParaSeg, booDebug)
     M1 = H1 .* H2;
     M2 = H1 .* (1 - H2);
     M3 = (1 - H1);
-    
+
     M1 = imresize(M1, 1 / scale);
     M2 = imresize(M2, 1 / scale);
     M3 = imresize(M3, 1 / scale);
-    
+
     imgSeg = C(1) * M1 + C(2) * M2 + C(3) * M3;  % three regions are labeled with C1, C2, C3
     if(booDebug); figure; imagesc(imgSeg); axis off; axis equal; title('Segmented regions');
     colormap(gray); maxscreen(); end

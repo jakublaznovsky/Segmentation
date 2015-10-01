@@ -1,9 +1,9 @@
-function [u, b, C]=  lse_bfe_3Phase(u, img, b, Ksigma, KONE, nu, timestep, mu, epsilon, Iter)
+function [u, b, C]=  lse_bfe_3Phase(u, img, b, Ksigma, KONE, nu, timestep, mu, epsilon)
 
 % This code implements the level set method by Chuming Li (2011, IEEE
 % transaction), by Pengwei Wu, guided by Tianye Niu.
 % The code implemented is now three-phase (which can be extended to four or
-% more phases). 
+% more phases).
 
 
 N_class = 3;  % three-phase
@@ -17,13 +17,13 @@ M(:,:,3) = (1 - H1); % membership function 3
 C = updateC(img, KB1, KB2, M);
 
 KONE_img = img .^ 2 .* KONE;
-u = updateLSF(img, u, C, N_class, KONE_img, KB1, KB2, mu, nu, timestep, epsilon, Iter);
+u = updateLSF(img, u, C, N_class, KONE_img, KB1, KB2, mu, nu, timestep, epsilon);
 
 b = updateB(img, C, M,  Ksigma);
 end
 
 
-function u = updateLSF(img,u, C, N_class, KONE_img, KB1, KB2, mu, nu, timestep, epsilon, ~)
+function u = updateLSF(img,u, C, N_class, KONE_img, KB1, KB2, mu, nu, timestep, epsilon)
 u(:,:,1) = NeumannBoundCond(u(:,:,1));
 Curv(:,:,1) = curvature_central(u(:,:,1));
 H1 = Heaviside(u(:,:,1), epsilon);
@@ -38,7 +38,7 @@ e = zeros([size(img),N_class]);
 for kk = 1:N_class
     e(:,:,kk) = KONE_img - 2 * img .* C(kk) .* KB1 + C(kk) ^ 2 * KB2;
 end
-    
+
 A1 = - Delta(:,:,1) .* (e(:,:,1) .* H2 + e(:,:,2) .* (1-H2) - e(:,:,3));
 P1 = mu * (4*del2(u(:,:,1)) - Curv(:,:,1));
 L1 = nu .* Delta(:,:,1) .* Curv(:,:,1);
