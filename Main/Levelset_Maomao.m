@@ -28,5 +28,6 @@ if(booDebug); figure, imshow(imgUnSegSmooth, [0 255]); title('Unsegmented image 
 ParaSeg = struct('iterOuter', 100, 'sigma', 3,  ...
     'timeStep', 0.1, 'muBase', 0.1, 'nuBase', 0.01, 'epsilon', 1, ...
     'scale', 0.5, 'save', []);
-
+tic
 [M1, M2, M3] = imseg_levelset(imgUnSegSmooth, ParaSeg, 1);
+toc
