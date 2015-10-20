@@ -7,14 +7,15 @@
 clear; close all; clc
 
 path(path, '../Function_Misc/');
+path(path, '../Function_Denoise/');
 path(path, '../Function_Segmentation/');
 
 booDebug = 1;
 
 %% Read the raw data
 
-pathBase = 'd:\Data\Misc\'; % Do not forget the final back slash.
-pathName = 'Maomao.bin';
+pathBase = '..\Data\'; % Do not forget the final back slash.
+pathName = 'Demo.bin';
 imgRaw = read_raw_data(strcat(pathBase, pathName), [512 512]);
 
 if(booDebug); figure, imshow(imgRaw, [0.015 0.025]); title('Original image'); end
