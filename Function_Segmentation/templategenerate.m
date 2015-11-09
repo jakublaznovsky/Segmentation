@@ -8,9 +8,10 @@ numPadding2 = Parameter.numPadding2;
 upperBound = truncate(2) * ones(dim1, dim2);
 lowerBound = truncate(1) * ones(dim1, dim2);
 if (strcmp(Parameter.method, 'simple'))
-    mask = Parameter.mask;
+    
+%     mask = Parameter.mask;
     logictemp = (imgRaw >= lowerBound) .* (imgRaw <= upperBound);
-    logictemp = logictemp .* mask;
+%     logictemp = logictemp .* mask;
     tempPure = numPadding1 .* ones(dim1, dim2);
     imgTemplate = imgRaw .* ~logictemp + tempPure .* logictemp;
     energyField = logictemp; % no meaning, just to keep a fluent move
