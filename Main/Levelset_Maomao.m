@@ -1,4 +1,5 @@
 % This is the main program.
+%It was adjusted
 % On segmentation of data set provided to my by Maomao.
 % This program utilizes the level set method (multi-phase).
 
