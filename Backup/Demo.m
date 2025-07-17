@@ -1,4 +1,4 @@
-
+%testing
 % This code demonstrates the level set evolution (LSE) and bias field estimation
 % proposed in the following paper:
 %      C. Li, R. Huang, Z. Ding, C. Gatenby, D. N. Metaxas, and J. C. Gore, 
